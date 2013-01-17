@@ -1,5 +1,5 @@
 from gearman import GearmanWorker
-from jenkinsapi.api import Jenkins
+#from jenkinsapi.api import Jenkins
 import simplejson
 
 # The function that will do the work
@@ -12,8 +12,8 @@ import simplejson
 def task_listener_echo(worker, job):
     
     jenkins_data = simplejson.loads(job.data)
-    print jenkins_data['uuid']
-    print jenkins_data['params']
+    print jenkins_data
+    print job.unique
     print job
     return "HI"
 
@@ -41,20 +41,20 @@ def task_listener_reverse(worker, job):
     return rev
 
 
-def task_listener_jenkins_invoke_job(worker, job):
-    
-    rev = "happy!!"
-    
-    jenkins_data = simplejson.loads(job.data)
-    try:
-        myj = Jenkins(jenkins_data['url'])
-        job = myj.get_job(jenkins_data['job_id'])
-        #job.invoke(securitytoken=token, block=block)
-        job.invoke(invoke_pre_check_delay=0)
-    except:
-        rev="Not Happy!!!" 
-    
-    return rev
+#def task_listener_jenkins_invoke_job(worker, job):
+#    
+#    rev = "happy!!"
+#    
+#    jenkins_data = simplejson.loads(job.data)
+#    try:
+#        myj = Jenkins(jenkins_data['url'])
+#        job = myj.get_job(jenkins_data['job_id'])
+#        #job.invoke(securitytoken=token, block=block)
+#        job.invoke(invoke_pre_check_delay=0)
+#    except:
+#        rev="Not Happy!!!" 
+#    
+#    return rev
 
 	
 # Establish a connection with the job server on localhost--like the client,
@@ -66,10 +66,10 @@ worker = GearmanWorker(['localhost'])
 worker.set_client_id('your_worker_client_id_name')
 worker.register_task('echo', task_listener_echo)
 worker.register_task('build:pep8', task_listener_build)
-worker.register_task('stop:jenkins_master.hp.com', task_listener_stop)
+#worker.register_task('stop:jenkins_master.hp.com', task_listener_stop)
 worker.register_task('bravo', task_listener_echo)
 worker.register_task('reverse', task_listener_reverse)
-worker.register_task('jenkins_invoke_job', task_listener_jenkins_invoke_job)
+#worker.register_task('jenkins_invoke_job', task_listener_jenkins_invoke_job)
 
 # Once setup is complete, begin working by consuming any tasks available
 # from the job server

@@ -1,5 +1,6 @@
 from gearman import GearmanClient
 import simplejson
+import uuid
 
 # create a client that will connect to the Gearman server running on
 # localhost. The array allows you to specify a set of job servers.
@@ -19,7 +20,6 @@ print 'Sending job...'
 #request = client.submit_job('org.gearman.example.ReverseFunction', "burnit", unique="id3456", poll_timeout=5)
 #request = client.submit_job('reverse', "burnit", unique="id3456", poll_timeout=5)
 #request = client.submit_job('reverse', "burnit", poll_timeout=5)
-#request = client.submit_job('echo', "mama", poll_timeout=5)
 #request = client.submit_job('echo', "mama")
 #request = client.submit_job('bravo', "mama")
 #print request.result
@@ -36,17 +36,22 @@ print 'Sending job...'
 #request = client.submit_job('build:lemon:centos', "", poll_timeout=5)
 
 # do a build job
+build_id = uuid.uuid4().hex
+print build_id
+
 #job_params = {'param1':"12321",'param2':"true",'param3':"validate"}
 #jenkins_data = {'uuid':'id2021', 'params':unicode(job_params)}
 jenkins_build_params = {'param1':"12321",'param2':"true",'param3':"validate"}
 #request = client.submit_job('build:lemon:oneiric-642067', simplejson.dumps(jenkins_data), poll_timeout=5)
-request = client.submit_job('stop:localhost', simplejson.dumps(jenkins_build_params), poll_timeout=5)
-#request = client.submit_job('build:guava', simplejson.dumps(jenkins_build_params), poll_timeout=5)
+request = client.submit_job('stop:localhost', simplejson.dumps(jenkins_build_params), poll_timeout=5, unique=build_id)
+
+#request = client.submit_job('build:guava', simplejson.dumps(jenkins_build_params), poll_timeout=5, unique=build_id)
 #request = client.submit_job('build:mango:torrent', simplejson.dumps(jenkins_build_params), unique="2012", poll_timeout=5)
 
 # do a stop job
 #request = client.submit_job('stop:jenkins_master.hp.com',"")
 
+#request = client.submit_job('echo', simplejson.dumps(jenkins_build_params), poll_timeout=5, unique=build_id)
 
 print request.result
 print 'Work complete with state %s' % request.state
