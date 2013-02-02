@@ -1,6 +1,7 @@
 from gearman import GearmanClient
 import simplejson
 import uuid
+import time
 
 # create a client that will connect to the Gearman server running on
 # localhost. The array allows you to specify a set of job servers.
@@ -36,20 +37,13 @@ print 'Sending job...'
 #request = client.submit_job('build:lemon:centos', "", poll_timeout=5)
 
 # do a build job
-build_id = uuid.uuid4().hex
+build_id = uuid.UUID('{0ab10213-0405-0607-0809-0a0b0c0d0e0f}').hex
+#build_id = uuid.uuid4().hex
 print build_id
 
-#job_params = {'param1':"12321",'param2':"true",'param3':"validate"}
-#jenkins_data = {'uuid':'id2021', 'params':unicode(job_params)}
-jenkins_build_params = {'param1':"12321",'param2':"true",'param3':"validate"}
-#request = client.submit_job('build:lemon:oneiric-642067', simplejson.dumps(jenkins_data), poll_timeout=5)
-request = client.submit_job('stop:localhost', simplejson.dumps(jenkins_build_params), poll_timeout=5, unique=build_id)
+jenkins_build_params = {'uuid':build_id,'param2':"true",'param3':'bingo'}
 
-#request = client.submit_job('build:guava', simplejson.dumps(jenkins_build_params), poll_timeout=5, unique=build_id)
-#request = client.submit_job('build:mango:torrent', simplejson.dumps(jenkins_build_params), unique="2012", poll_timeout=5)
-
-# do a stop job
-#request = client.submit_job('stop:jenkins_master.hp.com',"")
+request = client.submit_job('stop:localhost', simplejson.dumps(jenkins_build_params), unique=build_id, poll_timeout=5)
 
 #request = client.submit_job('echo', simplejson.dumps(jenkins_build_params), poll_timeout=5, unique=build_id)
 

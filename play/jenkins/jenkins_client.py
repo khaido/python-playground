@@ -1,8 +1,11 @@
 '''
 Created on Dec 7, 2012
 
+example of controlling jenkins using the python jenkinsapi.  
+
 @author: khaido
 '''
+
 from jenkinsapi.api import Jenkins
 
 

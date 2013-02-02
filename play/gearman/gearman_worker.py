@@ -59,7 +59,8 @@ def task_listener_reverse(worker, job):
 	
 # Establish a connection with the job server on localhost--like the client,
 # multiple job servers can be used.
-worker = GearmanWorker(['localhost'])
+#worker = GearmanWorker(['localhost:4730'])
+worker = GearmanWorker(['15.185.117.66:4730'])
 
 # register_task will tell the job server that this worker handles the "echo"
 # task
