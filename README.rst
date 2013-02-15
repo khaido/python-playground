@@ -18,8 +18,22 @@ This is the typical workflow:
 
 
 
+Installation
+============
+
+The plugin can be installed like any other Jenkins plugin.  Please refer to the Jenkins documentation on installing plugins.
+
+Configuration
+=============
+
+Configuration of the plugin can be done on the Jenkins configure page (i.e. http://localhost:8080/configure). Click on the help if needed. 
+
 Developers
 ==========
+Project site:
+
+ * https://launchpad.net/~gearman-plugin-core
+
 Bug report:
 
  * https://bugs.launchpad.net/~gearman-plugin-core
@@ -37,5 +51,5 @@ More details on how you can contribute is available on our wiki at:
  * http://wiki.openstack.org/HowToContribute
 
 
-.. image:: gearman-register-job.jpg
-.. image:: gearman-worker-threads.jpg
+.. image:: doc/gearman-register-job.jpg
+.. image:: doc/gearman-worker-threads.jpg
